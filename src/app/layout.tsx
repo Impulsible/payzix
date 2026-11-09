@@ -1,21 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/hooks/use-auth";
 import "./globals.css";
-
-/* ================================================================
-   1. FONT CONFIGURATION
-   - Variable fonts (Manrope, Inter) load the full weight range
-     at near-zero extra cost — perfect for fintech UIs that use
-     400→800 across headings, body, and amount displays.
-   - IBM Plex Mono is NOT variable, so we cherry-pick weights.
-   ================================================================ */
 
 const manrope = Manrope({
   subsets: ["latin", "latin-ext"],
   variable: "--font-manrope",
   display: "swap",
   preload: true,
-  // Variable font — covers weights 200–800 automatically
 });
 
 const inter = Inter({
@@ -23,7 +16,6 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
   preload: true,
-  // Variable font — covers weights 100–900 automatically
 });
 
 const mono = IBM_Plex_Mono({
@@ -31,14 +23,8 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
   variable: "--font-mono",
   display: "swap",
-  preload: false, // loaded on-demand (data screens only)
+  preload: false,
 });
-
-/* ================================================================
-   2. VIEWPORT (Next.js 14+ separate export)
-   - viewportFit=cover enables safe-area insets for notch phones
-   - themeColor matches your brand for mobile browser chrome
-   ================================================================ */
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -52,10 +38,6 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
-/* ================================================================
-   3. METADATA — SEO, Open Graph, Twitter, Icons, PWA
-   ================================================================ */
-
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://payzix.com";
 const BRAND_NAME = "Payzix";
 const DEFAULT_TITLE = "More than payments.";
@@ -64,30 +46,17 @@ const DEFAULT_DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-
   title: {
     default: `${BRAND_NAME} — ${DEFAULT_TITLE}`,
     template: `%s | ${BRAND_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
-
   keywords: [
-    "Payzix",
-    "fintech",
-    "mobile money",
-    "payments",
-    "transfers",
-    "Nigeria",
-    "Africa",
-    "digital banking",
-    "wallet",
-    "USSD",
+    "Payzix", "fintech", "mobile money", "payments", "transfers", "Nigeria", "Africa", "digital banking", "wallet", "USSD",
   ],
-
   authors: [{ name: BRAND_NAME, url: SITE_URL }],
   creator: BRAND_NAME,
   publisher: BRAND_NAME,
-
   robots: {
     index: true,
     follow: true,
@@ -99,7 +68,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-
   alternates: {
     canonical: SITE_URL,
     languages: {
@@ -107,7 +75,6 @@ export const metadata: Metadata = {
       "en-GB": `${SITE_URL}/gb`,
     },
   },
-
   openGraph: {
     type: "website",
     locale: "en_NG",
@@ -125,16 +92,14 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: "summary_large_image",
-    site: "@payaborode",    // ← replace with your handle
-    creator: "@payaborode",  // ← replace
+    site: "@payaborode",
+    creator: "@payaborode",
     title: `${BRAND_NAME} — ${DEFAULT_TITLE}`,
     description: DEFAULT_DESCRIPTION,
     images: ["/og-image.png"],
   },
-
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -143,39 +108,21 @@ export const metadata: Metadata = {
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     shortcut: "/favicon.ico",
   },
-
   manifest: "/manifest.json",
-
   appleWebApp: {
     capable: true,
     title: BRAND_NAME,
     statusBarStyle: "black-translucent",
   },
-
-  formatDetection: {
-    telephone: false,  // prevent iOS auto-linking account numbers
-    date: false,
-    address: false,
-    email: false,
-  },
-
+  formatDetection: { telephone: false, date: false, address: false, email: false },
   other: {
-    // Prevents iOS from auto-detecting numbers as phone links
     "format-detection": "telephone=no",
-    // PWA splash screen color
     "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
 };
-
-/* ================================================================
-   4. STRUCTURED DATA (JSON-LD)
-   - Helps Google render rich results for your fintech app
-   ================================================================ */
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -200,9 +147,13 @@ const jsonLd = {
   },
 };
 
-/* ================================================================
-   5. ROOT LAYOUT
-   ================================================================ */
+function getSafeJsonLd(data: Record<string, unknown>) {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/'/g, "\\u0027");
+}
 
 export default function RootLayout({
   children,
@@ -210,33 +161,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      dir="ltr"
-      // suppressHydrationWarning is REQUIRED if you add next-themes
-      // or any client-side dark mode toggle later.
-      suppressHydrationWarning
-    >
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
-        {/* ── Structured Data ── */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: getSafeJsonLd(jsonLd) }}
         />
-
-        {/* ── Preconnect for external APIs (analytics, CDN) ── */}
         <link rel="preconnect" href="https://api.payzix.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-
-        {/* ── DNS Prefetch (non-critical third parties) ── */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://cdn.mixpanel.com" />
-
-        {/* ── Prevent FOUC on dark mode ── */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -259,63 +193,18 @@ export default function RootLayout({
           ${inter.variable}
           ${mono.variable}
           antialiased
+          font-body
           selection:bg-[rgba(39,227,154,0.25)]
         `}
       >
-        {/* ── Accessibility: Skip to main content ── */}
-        <a
-          href="#main-content"
-          className="skip-link"
-        >
-          Skip to main content
-        </a>
+        <AuthProvider>
+          <main id="main-content" className="relative min-h-screen">
+            {children}
+          </main>
+          <Toaster />
+        </AuthProvider>
 
-        {/*
-          ── Providers (uncomment when you add them) ──
-          Wrap with your providers in this order:
-
-          <ThemeProvider>
-            <QueryClientProvider>
-              <ToasterProvider>
-                {children}
-              </ToasterProvider>
-            </QueryClientProvider>
-          </ThemeProvider>
-        */}
-
-        <main id="main-content" className="relative">
-          {children}
-        </main>
-
-        {/* ── Toast / Notification Portal ── */}
-        <div
-          id="payzix-toast-root"
-          aria-live="polite"
-          aria-atomic="true"
-          className="pointer-events-none fixed inset-0 z-700"
-        />
-
-        {/* ── Modal / Sheet Portal ── */}
-        <div
-          id="payzix-modal-root"
-          className="fixed inset-0 z-500"
-        />
-
-        {/*
-          ── Analytics (load deferred — non-blocking) ──
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-            strategy="afterInteractive"
-          />
-          <Script id="gtag-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-XXXXXXXXXX');
-            `}
-          </Script>
-        */}
+        <div id="payzix-modal-root" className="fixed inset-0 z-500 pointer-events-none" />
       </body>
     </html>
   );

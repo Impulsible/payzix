@@ -1,381 +1,271 @@
-/* ============================================================
-   PAYZIX DESIGN SYSTEM — v1.0
-   ============================================================ */
+@import "tailwindcss";
 
-@import "tailwindcss/preflight";
-@tailwind utilities;
-@tailwind utilities;
+/* ================================================================
+   PAYZIX TAILWIND V4 THEME (Replaces tailwind.config.ts)
+   ================================================================ */
+@theme {
+  /* Breakpoints */
+  --breakpoint-xs: 375px;
+  --breakpoint-app: 480px;
 
-/* ------------------------------------------------------------
-   1. DESIGN TOKENS (Light — Default)
-   ------------------------------------------------------------ */
+  /* Colors: Navy */
+  --color-navy: #07111F;
+  --color-navy-50: #e8edf4;
+  --color-navy-100: #c5d0e3;
+  --color-navy-200: #9fb1d0;
+  --color-navy-300: #7892bd;
+  --color-navy-400: #5a7aae;
+  --color-navy-500: #3c639f;
+  --color-navy-600: #2d4f82;
+  --color-navy-700: #1e3a62;
+  --color-navy-800: #0F2035;
+  --color-navy-900: #0A1628;
+  --color-navy-950: #07111F;
+
+  /* Colors: Green */
+  --color-green-50: #edfdf5;
+  --color-green-100: #d1fae5;
+  --color-green-200: #a7f3d0;
+  --color-green-300: #6ee7b7;
+  --color-green-400: #5AEBAF;
+  --color-green-500: #27E39A;
+  --color-green-600: #1CC783;
+  --color-green-700: #15a36b;
+  --color-green-800: #118256;
+  --color-green-900: #0d6142;
+  --color-green-950: #073d29;
+
+  /* Colors: Cyan */
+  --color-cyan-50: #edf9fb;
+  --color-cyan-100: #d1f0f5;
+  --color-cyan-200: #a8e2eb;
+  --color-cyan-300: #7dd4e1;
+  --color-cyan-400: #5DD9E6;
+  --color-cyan-500: #28C7D9;
+  --color-cyan-600: #1BA8B8;
+  --color-cyan-700: #158a98;
+  --color-cyan-800: #116d78;
+  --color-cyan-900: #0d5159;
+  --color-cyan-950: #08353b;
+
+  /* Colors: Semantic (Mapped to CSS Variables defined below) */
+  --color-background: var(--payzix-bg);
+  --color-surface: var(--payzix-surface);
+  --color-surface-hover: var(--payzix-surface-hover);
+  --color-elevated: var(--payzix-bg-elevated);
+  --color-sunken: var(--payzix-bg-sunken);
+  
+  --color-text: var(--payzix-text);
+  --color-text-secondary: var(--payzix-text-secondary);
+  --color-muted: var(--payzix-muted);
+  --color-muted-light: var(--payzix-muted-light);
+  
+  --color-border: var(--payzix-border);
+  --color-border-light: var(--payzix-border-light);
+  --color-divider: var(--payzix-divider);
+
+  --color-success: var(--payzix-success);
+  --color-success-bg: var(--payzix-success-bg);
+  --color-warning: var(--payzix-warning);
+  --color-warning-bg: var(--payzix-warning-bg);
+  --color-error: var(--payzix-error);
+  --color-error-bg: var(--payzix-error-bg);
+  --color-info: var(--payzix-info);
+  --color-info-bg: var(--payzix-info-bg);
+  --color-pending: var(--payzix-pending);
+  --color-pending-bg: var(--payzix-pending-bg);
+
+  /* Fonts */
+  --font-heading: var(--font-manrope), "Manrope", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-mono: var(--font-mono), "IBM Plex Mono", monospace;
+
+  /* Font Sizes (Fintech specific) */
+  --text-2xs: 0.625rem;
+  --text-amount: clamp(2rem, 6vw, 3.5rem);
+  --text-amount-sm: clamp(1.5rem, 4vw, 2.25rem);
+
+  /* Spacing */
+  --spacing-4_5: 1.125rem;
+  --spacing-13: 3.25rem;
+  --spacing-15: 3.75rem;
+  --spacing-18: 4.5rem;
+
+  /* Border Radius */
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+  --radius-card: 16px;
+  --radius-card-lg: 20px;
+  --radius-button: 12px;
+
+  /* Shadows */
+  --shadow-brand: var(--shadow-brand);
+  --shadow-brand-lg: var(--shadow-brand-lg);
+  --shadow-card: var(--shadow-card);
+  --shadow-float: var(--shadow-float);
+  --shadow-nav: var(--shadow-nav);
+
+  /* Background Images */
+  --background-image-gradient-brand: linear-gradient(135deg, #27E39A 0%, #28C7D9 100%);
+  --background-image-gradient-dark: linear-gradient(160deg, #07111F 0%, #0F2035 100%);
+  --background-image-gradient-card: linear-gradient(145deg, #0F2035 0%, #07111F 50%, #0A1628 100%);
+  
+  /* Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  --animate-slide-up: slide-up 400ms cubic-bezier(0.16,1,0.3,1) both;
+  --animate-slide-down: slide-down 250ms cubic-bezier(0.16,1,0.3,1) both;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ================================================================
+   1. DESIGN TOKENS (Light & Dark Mode Variables)
+   ================================================================ */
 :root {
-  /* ── Brand ── */
-  --payzix-navy:        #07111f;
-  --payzix-navy-900:    #0a1628;
-  --payzix-navy-800:    #0f2035;
-  --payzix-navy-700:    #152d4a;
-  --payzix-green:       #27e39a;
-  --payzix-green-600:   #1cc783;
-  --payzix-green-500:   #27e39a;
-  --payzix-green-400:   #5aebaf;
-  --payzix-green-100:   #d1fae5;
-  --payzix-cyan:        #28c7d9;
-  --payzix-cyan-600:    #1ba8b8;
-  --payzix-cyan-400:    #5dd9e6;
-
-  /* ── Semantic ── */
-  --payzix-bg:          #f8fafc;
+  --payzix-bg: #f8fafc;
   --payzix-bg-elevated: #ffffff;
-  --payzix-bg-sunken:   #f1f5f9;
-  --payzix-surface:     #ffffff;
-  --payzix-surface-hover:#f8fafc;
-  --payzix-text:        #0f172a;
-  --payzix-text-secondary:#475569;
-  --payzix-muted:       #64748b;
+  --payzix-bg-sunken: #f1f5f9;
+  --payzix-surface: #ffffff;
+  --payzix-surface-hover: #f8fafc;
+  --payzix-text: #0f172a;
+  --payzix-text-secondary: #475569;
+  --payzix-muted: #64748b;
   --payzix-muted-light: #94a3b8;
-  --payzix-border:      #e2e8f0;
-  --payzix-border-light:#f1f5f9;
-  --payzix-divider:     #e2e8f0;
+  --payzix-border: #e2e8f0;
+  --payzix-border-light: #f1f5f9;
+  --payzix-divider: #e2e8f0;
 
-  /* ── Status / Fintech-specific ── */
-  --payzix-success:     #10b981;
-  --payzix-success-bg:  #ecfdf5;
-  --payzix-warning:     #f59e0b;
-  --payzix-warning-bg:  #fffbeb;
-  --payzix-error:       #ef4444;
-  --payzix-error-bg:    #fef2f2;
-  --payzix-info:        #3b82f6;
-  --payzix-info-bg:     #eff6ff;
-  --payzix-pending:     #8b5cf6;
-  --payzix-pending-bg:  #f5f3ff;
+  --payzix-success: #10b981;
+  --payzix-success-bg: #ecfdf5;
+  --payzix-warning: #f59e0b;
+  --payzix-warning-bg: #fffbeb;
+  --payzix-error: #ef4444;
+  --payzix-error-bg: #fef2f2;
+  --payzix-info: #3b82f6;
+  --payzix-info-bg: #eff6ff;
+  --payzix-pending: #8b5cf6;
+  --payzix-pending-bg: #f5f3ff;
 
-  /* ── Gradients ── */
-  --gradient-brand:     linear-gradient(135deg, var(--payzix-green) 0%, var(--payzix-cyan) 100%);
-  --gradient-brand-alt: linear-gradient(135deg, var(--payzix-cyan) 0%, var(--payzix-green) 100%);
-  --gradient-dark:      linear-gradient(160deg, var(--payzix-navy) 0%, var(--payzix-navy-800) 100%);
-  --gradient-card:      linear-gradient(145deg, #0f2035 0%, #07111f 50%, #0a1628 100%);
-  --gradient-hero:      linear-gradient(180deg, var(--payzix-navy) 0%, #0c1e33 60%, var(--payzix-bg) 100%);
-  --gradient-glass:     linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
-  --gradient-shimmer:   linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
-
-  /* ── Shadows (layered for depth like Moniepoint) ── */
-  --shadow-xs:    0 1px 2px rgba(15,23,42,0.04);
-  --shadow-sm:    0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
-  --shadow-md:    0 4px 6px -1px rgba(15,23,42,0.06), 0 2px 4px -2px rgba(15,23,42,0.04);
-  --shadow-lg:    0 10px 15px -3px rgba(15,23,42,0.06), 0 4px 6px -4px rgba(15,23,42,0.04);
-  --shadow-xl:    0 20px 25px -5px rgba(15,23,42,0.08), 0 8px 10px -6px rgba(15,23,42,0.04);
-  --shadow-2xl:   0 25px 50px -12px rgba(15,23,42,0.18);
-  --shadow-inner: inset 0 2px 4px rgba(15,23,42,0.04);
   --shadow-brand: 0 8px 24px -4px rgba(39,227,154,0.25);
   --shadow-brand-lg: 0 12px 40px -8px rgba(39,227,154,0.35);
-  --shadow-cyan:  0 8px 24px -4px rgba(40,199,217,0.25);
-  --shadow-card:  0 1px 3px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.03);
+  --shadow-card: 0 1px 3px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.03);
   --shadow-float: 0 20px 60px -15px rgba(7,17,31,0.2);
-  --shadow-nav:   0 1px 0 rgba(226,232,240,0.8), 0 4px 12px rgba(15,23,42,0.03);
-
-  /* ── Radii ── */
-  --radius-sm:    8px;
-  --radius-md:    12px;
-  --radius-lg:    16px;
-  --radius-xl:    20px;
-  --radius-2xl:   24px;
-  --radius-3xl:   32px;
-  --radius-full:  9999px;
-
-  /* ── Spacing Scale ── */
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  20px;
-  --space-6:  24px;
-  --space-8:  32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-
-  /* ── Transitions ── */
-  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-fast:  150ms;
-  --duration-base:  250ms;
-  --duration-slow:  400ms;
-  --duration-slower:600ms;
-
-  /* ── Z-Index Layers ── */
-  --z-base:     1;
-  --z-dropdown: 100;
-  --z-sticky:   200;
-  --z-nav:      300;
-  --z-overlay:  400;
-  --z-modal:    500;
-  --z-popover:  600;
-  --z-toast:    700;
-  --z-tooltip:  800;
-
-  /* ── Safe Areas (Mobile Notch / Home Indicator) ── */
-  --safe-top:    env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-left:   env(safe-area-inset-left, 0px);
-  --safe-right:  env(safe-area-inset-right, 0px);
+  --shadow-nav: 0 1px 0 rgba(226,232,240,0.8), 0 4px 12px rgba(15,23,42,0.03);
+  
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ------------------------------------------------------------
-   2. DESIGN TOKENS (Dark Mode)
-   ------------------------------------------------------------ */
 .dark {
-  --payzix-bg:          #050d18;
+  --payzix-bg: #050d18;
   --payzix-bg-elevated: #0c1a2e;
-  --payzix-bg-sunken:   #030810;
-  --payzix-surface:     #0f1f35;
-  --payzix-surface-hover:#152a45;
-  --payzix-text:        #f1f5f9;
-  --payzix-text-secondary:#94a3b8;
-  --payzix-muted:       #64748b;
+  --payzix-bg-sunken: #030810;
+  --payzix-surface: #0f1f35;
+  --payzix-surface-hover: #152a45;
+  --payzix-text: #f1f5f9;
+  --payzix-text-secondary: #94a3b8;
+  --payzix-muted: #64748b;
   --payzix-muted-light: #475569;
-  --payzix-border:      #1e3a5f;
-  --payzix-border-light:#152a45;
-  --payzix-divider:     #1e3a5f;
+  --payzix-border: #1e3a5f;
+  --payzix-border-light: #152a45;
+  --payzix-divider: #1e3a5f;
 
-  --payzix-success-bg:  rgba(16,185,129,0.1);
-  --payzix-warning-bg:  rgba(245,158,11,0.1);
-  --payzix-error-bg:    rgba(239,68,68,0.1);
-  --payzix-info-bg:     rgba(59,130,246,0.1);
-  --payzix-pending-bg:  rgba(139,92,246,0.1);
+  --payzix-success-bg: rgba(16,185,129,0.1);
+  --payzix-warning-bg: rgba(245,158,11,0.1);
+  --payzix-error-bg: rgba(239,68,68,0.1);
+  --payzix-info-bg: rgba(59,130,246,0.1);
+  --payzix-pending-bg: rgba(139,92,246,0.1);
 
-  --shadow-xs:    0 1px 2px rgba(0,0,0,0.3);
-  --shadow-sm:    0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md:    0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.3);
-  --shadow-lg:    0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -4px rgba(0,0,0,0.3);
-  --shadow-xl:    0 20px 25px -5px rgba(0,0,0,0.5), 0 8px 10px -6px rgba(0,0,0,0.3);
-  --shadow-2xl:   0 25px 50px -12px rgba(0,0,0,0.6);
-  --shadow-card:  0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
   --shadow-float: 0 20px 60px -15px rgba(0,0,0,0.5);
-  --shadow-nav:   0 1px 0 rgba(30,58,95,0.5), 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-nav: 0 1px 0 rgba(30,58,95,0.5), 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* ------------------------------------------------------------
-   3. BASE RESET & GLOBAL STYLES
-   ------------------------------------------------------------ */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ================================================================
+   2. BASE STYLES
+   ================================================================ */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-smooth);
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: transparent;
-  /* Fluid base font: 15px → 16px */
-  font-size: clamp(15px, 0.5vw + 14px, 16px);
-}
-
-body {
-  background: var(--payzix-bg);
-  color: var(--payzix-text);
-  font-family: var(--font-inter), "Inter", system-ui, -apple-system,
-               BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  line-height: 1.6;
-  min-height: 100dvh;
-  min-height: 100vh; /* fallback */
-  overflow-x: hidden;
-  /* Safe area padding for mobile */
-  padding-top: var(--safe-top);
-  padding-bottom: var(--safe-bottom);
-  padding-left: var(--safe-left);
-  padding-right: var(--safe-right);
-  transition: background-color var(--duration-slow) var(--ease-smooth),
-              color var(--duration-slow) var(--ease-smooth);
-}
-
-/* ── Headings ── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-manrope), "Manrope", "Inter", sans-serif;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--payzix-text);
-  text-wrap: balance;
-}
-
-h1 { font-size: clamp(1.875rem, 4vw, 2.75rem); letter-spacing: -0.03em; }
-h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
-h4 { font-size: clamp(1.125rem, 2vw, 1.25rem); }
-h5 { font-size: 1rem; }
-
-p {
-  text-wrap: pretty;
-  max-width: 65ch;
-}
-
-/* ── Links ── */
-a {
-  color: var(--payzix-green-600);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-smooth);
-}
-a:hover { color: var(--payzix-green); }
-
-/* ── Images ── */
-img, svg, video {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* ── Inputs / Buttons Reset ── */
-button, input, select, textarea {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: none;
-  outline: none;
-}
-button {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ── Lists ── */
-ul, ol { list-style: none; }
-
-/* ── Selection ── */
-::selection {
-  background: rgba(39, 227, 154, 0.25);
-  color: var(--payzix-text);
-}
-
-/* ── Scrollbar (Webkit) ── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--payzix-muted-light);
-  border-radius: var(--radius-full);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--payzix-muted);
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--payzix-muted-light) transparent;
-}
-
-/* ------------------------------------------------------------
-   4. TYPOGRAPHY UTILITIES
-   ------------------------------------------------------------ */
-.font-mono-data {
-  font-family: var(--font-mono), "IBM Plex Mono", "JetBrains Mono",
-               "SF Mono", "Fira Code", monospace;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
-}
-
-/* Amount display (like OPay balance) */
-.text-amount {
-  font-family: var(--font-manrope), "Manrope", sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-
-.text-amount-xl {
-  font-size: clamp(2.25rem, 6vw, 3.5rem);
-}
-
-.text-amount-lg {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-}
-
-/* Naira / currency symbol smaller */
-.currency-symbol {
-  font-size: 0.6em;
-  font-weight: 600;
-  vertical-align: super;
-  margin-right: 2px;
-  opacity: 0.8;
-}
-
-/* Label styles */
-.text-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--payzix-muted);
-}
-
-.text-caption {
-  font-size: 0.8125rem;
-  color: var(--payzix-muted);
-  line-height: 1.5;
-}
-
-/* ------------------------------------------------------------
-   5. COMPONENT STYLES (@layer components)
-   ------------------------------------------------------------ */
+/* ================================================================
+   3. COMPONENT STYLES
+   ================================================================ */
 @layer components {
-
-  /* ── Cards ── */
   .card {
     background: var(--payzix-surface);
     border: 1px solid var(--payzix-border);
-    border-radius: var(--radius-xl);
-    padding: var(--space-6);
+    border-radius: var(--radius-card-lg);
+    padding: 1.5rem;
     box-shadow: var(--shadow-card);
-    transition: box-shadow var(--duration-base) var(--ease-out-expo),
-                transform var(--duration-base) var(--ease-out-expo),
-                border-color var(--duration-base) var(--ease-smooth);
+    transition: box-shadow var(--duration-base) var(--ease-out-expo), transform var(--duration-base) var(--ease-out-expo);
   }
-  .card:hover {
-    box-shadow: var(--shadow-lg);
-    border-color: var(--payzix-border-light);
-  }
+  
   .card-interactive:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
-  }
-  .card-interactive:active {
-    transform: translateY(0) scale(0.99);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-float);
   }
 
-  /* ── Glass Card (like Moniepoint premium) ── */
-  .card-glass {
-    background: var(--gradient-glass);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
-  }
-
-  /* ── Virtual Card (Debit card look) ── */
   .virtual-card {
-    background: var(--gradient-card);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-6) var(--space-8);
+    background: var(--background-image-gradient-card);
+    border-radius: var(--radius-4xl);
+    padding: 1.5rem 2rem;
     aspect-ratio: 1.586 / 1;
     max-width: 380px;
     position: relative;
@@ -383,57 +273,32 @@ ul, ol { list-style: none; }
     box-shadow: var(--shadow-float);
     color: #ffffff;
   }
-  .virtual-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at 80% 20%,
-      rgba(39,227,154,0.15) 0%,
-      transparent 60%
-    );
-    pointer-events: none;
-  }
-  .virtual-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at 20% 80%,
-      rgba(40,199,217,0.1) 0%,
-      transparent 50%
-    );
-    pointer-events: none;
-  }
 
-  /* ── Buttons ── */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
+    gap: 0.5rem;
     font-weight: 600;
     font-size: 0.9375rem;
     line-height: 1;
     padding: 14px 24px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-button);
     transition: all var(--duration-base) var(--ease-out-expo);
-    position: relative;
-    overflow: hidden;
     white-space: nowrap;
-    user-select: none;
-    -webkit-user-select: none;
   }
+
   .btn:active {
     transform: scale(0.97);
   }
 
   .btn-primary {
-    background: var(--gradient-brand);
-    color: var(--payzix-navy);
+    background: var(--background-image-gradient-brand);
+    color: #07111F;
     box-shadow: var(--shadow-brand);
     font-weight: 700;
   }
+
   .btn-primary:hover {
     box-shadow: var(--shadow-brand-lg);
     filter: brightness(1.05);
@@ -443,118 +308,23 @@ ul, ol { list-style: none; }
     background: var(--payzix-surface);
     color: var(--payzix-text);
     border: 1px solid var(--payzix-border);
-    box-shadow: var(--shadow-xs);
   }
+
   .btn-secondary:hover {
     background: var(--payzix-surface-hover);
-    border-color: var(--payzix-muted-light);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--payzix-green-600);
-  }
-  .btn-ghost:hover {
-    background: var(--payzix-green-100);
-  }
-  .dark .btn-ghost:hover {
-    background: rgba(39,227,154,0.1);
-  }
-
-  .btn-danger {
-    background: var(--payzix-error);
-    color: #ffffff;
-  }
-  .btn-danger:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 8px 24px -4px rgba(239,68,68,0.3);
   }
 
   .btn-sm {
     padding: 10px 16px;
     font-size: 0.8125rem;
-    border-radius: var(--radius-sm);
   }
+
   .btn-lg {
     padding: 18px 32px;
     font-size: 1.0625rem;
-    border-radius: var(--radius-lg);
-  }
-  .btn-full {
-    width: 100%;
-  }
-  .btn-icon {
-    padding: 12px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-card);
   }
 
-  /* Button loading state */
-  .btn-loading {
-    pointer-events: none;
-    opacity: 0.75;
-  }
-  .btn-loading::after {
-    content: "";
-    width: 16px;
-    height: 16px;
-    border: 2px solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-  }
-
-  /* ── Inputs ── */
-  .input {
-    width: 100%;
-    padding: 14px 16px;
-    background: var(--payzix-surface);
-    border: 1.5px solid var(--payzix-border);
-    border-radius: var(--radius-md);
-    font-size: 0.9375rem;
-    color: var(--payzix-text);
-    transition: border-color var(--duration-fast) var(--ease-smooth),
-                box-shadow var(--duration-fast) var(--ease-smooth);
-  }
-  .input::placeholder {
-    color: var(--payzix-muted-light);
-  }
-  .input:hover {
-    border-color: var(--payzix-muted-light);
-  }
-  .input:focus {
-    border-color: var(--payzix-green);
-    box-shadow: 0 0 0 3px rgba(39,227,154,0.15);
-  }
-  .input-error {
-    border-color: var(--payzix-error);
-  }
-  .input-error:focus {
-    box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
-  }
-
-  /* Amount input (large, centered — like transfer screen) */
-  .input-amount {
-    font-family: var(--font-manrope), "Manrope", sans-serif;
-    font-size: clamp(2rem, 6vw, 3rem);
-    font-weight: 800;
-    text-align: center;
-    border: none;
-    background: transparent;
-    letter-spacing: -0.03em;
-    color: var(--payzix-text);
-    width: 100%;
-    padding: var(--space-4) 0;
-  }
-  .input-amount::placeholder {
-    color: var(--payzix-muted-light);
-    opacity: 0.5;
-  }
-  .input-amount:focus {
-    box-shadow: none;
-  }
-
-  /* ── Badges / Status Pills ── */
   .badge {
     display: inline-flex;
     align-items: center;
@@ -562,545 +332,122 @@ ul, ol { list-style: none; }
     padding: 4px 10px;
     font-size: 0.75rem;
     font-weight: 600;
-    border-radius: var(--radius-full);
-    line-height: 1.4;
+    border-radius: 9999px;
   }
+
   .badge-success {
     background: var(--payzix-success-bg);
     color: var(--payzix-success);
   }
-  .badge-warning {
-    background: var(--payzix-warning-bg);
-    color: var(--payzix-warning);
+
+  .text-gradient-brand {
+    background: var(--background-image-gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .badge-error {
-    background: var(--payzix-error-bg);
-    color: var(--payzix-error);
-  }
-  .badge-info {
-    background: var(--payzix-info-bg);
-    color: var(--payzix-info);
-  }
-  .badge-pending {
-    background: var(--payzix-pending-bg);
-    color: var(--payzix-pending);
+}
+
+/* ================================================================
+   4. UTILITIES
+   ================================================================ */
+@layer utilities {
+  .font-mono-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Status dot (for transaction lists) */
+  .text-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--payzix-muted);
+  }
+  
+  .text-2xs {
+    font-size: 0.625rem;
+  }
+
   .status-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .status-dot-success { background: var(--payzix-success); }
-  .status-dot-pending { background: var(--payzix-pending); animation: pulse-dot 2s infinite; }
-  .status-dot-error   { background: var(--payzix-error); }
 
-  /* ── Transaction Row (like OPay history) ── */
-  .txn-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-4) 0;
-    border-bottom: 1px solid var(--payzix-border-light);
-    transition: background var(--duration-fast) var(--ease-smooth);
-  }
-  .txn-row:last-child { border-bottom: none; }
-  .txn-row:active {
-    background: var(--payzix-bg-sunken);
-  }
-  .txn-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1.25rem;
-  }
-  .txn-amount {
-    font-family: var(--font-manrope), "Manrope", sans-serif;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-  .txn-amount-credit { color: var(--payzix-success); }
-  .txn-amount-debit  { color: var(--payzix-text); }
-
-  /* ── Quick Action Grid (like OPay home) ── */
-  .quick-actions {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4);
-  }
-  @media (max-width: 380px) {
-    .quick-actions { grid-template-columns: repeat(3, 1fr); }
-  }
-  .quick-action-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-4) var(--space-2);
-    border-radius: var(--radius-lg);
-    transition: all var(--duration-base) var(--ease-out-expo);
-    cursor: pointer;
-  }
-  .quick-action-item:active {
-    transform: scale(0.93);
-    background: var(--payzix-bg-sunken);
-  }
-  .quick-action-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.375rem;
-    background: var(--payzix-bg-sunken);
-    transition: all var(--duration-base) var(--ease-out-expo);
-  }
-  .quick-action-item:hover .quick-action-icon {
-    background: var(--payzix-green-100);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  .dark .quick-action-item:hover .quick-action-icon {
-    background: rgba(39,227,154,0.12);
-  }
-  .quick-action-label {
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--payzix-text-secondary);
-    text-align: center;
-    line-height: 1.3;
+  .status-dot-success {
+    background: var(--payzix-success);
   }
 
-  /* ── Bottom Navigation (Mobile) ── */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-nav);
-    background: var(--payzix-surface);
-    border-top: 1px solid var(--payzix-border);
-    padding: var(--space-2) 0;
-    padding-bottom: calc(var(--space-2) + var(--safe-bottom));
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 -4px 20px rgba(15,23,42,0.04);
+  /* Map backdrop-blur-nav used in page.tsx */
+  .backdrop-blur-nav {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
-  .bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    color: var(--payzix-muted);
-    font-size: 0.625rem;
-    font-weight: 500;
-    transition: all var(--duration-fast) var(--ease-smooth);
-  }
-  .bottom-nav-item.active {
-    color: var(--payzix-green-600);
-  }
-  .bottom-nav-item:active {
-    transform: scale(0.9);
-  }
-
-  /* ── Skeleton Loading (like Moniepoint shimmer) ── */
-  .skeleton {
-    background: var(--payzix-bg-sunken);
-    border-radius: var(--radius-sm);
-    position: relative;
-    overflow: hidden;
-  }
-  .skeleton::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-shimmer);
-    animation: shimmer 1.8s ease-in-out infinite;
-    transform: translateX(-100%);
-  }
-  .skeleton-circle {
-    border-radius: 50%;
-  }
-  .skeleton-text {
-    height: 14px;
-    width: 80%;
-  }
-  .skeleton-text-sm {
-    height: 10px;
-    width: 50%;
-  }
-  .skeleton-amount {
-    height: 36px;
-    width: 160px;
-    border-radius: var(--radius-md);
-  }
-  .skeleton-card {
-    height: 200px;
-    border-radius: var(--radius-2xl);
-  }
-
-  /* ── Toast / Snackbar ── */
-  .toast {
-    position: fixed;
-    top: calc(var(--space-6) + var(--safe-top));
-    left: 50%;
-    transform: translateX(-50%) translateY(-120%);
-    z-index: var(--z-toast);
-    background: var(--payzix-navy);
-    color: #ffffff;
-    padding: 14px 20px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-2xl);
-    font-size: 0.875rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    max-width: calc(100vw - var(--space-8));
-    animation: toast-in var(--duration-slow) var(--ease-out-expo) forwards;
-  }
-  .toast-success { border-left: 3px solid var(--payzix-success); }
-  .toast-error   { border-left: 3px solid var(--payzix-error); }
-  .toast-info    { border-left: 3px solid var(--payzix-info); }
-
-  /* ── Modal / Sheet ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: var(--z-overlay);
-    background: rgba(7,17,31,0.6);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    animation: fade-in var(--duration-base) var(--ease-smooth);
-  }
-  .modal-sheet {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-modal);
-    background: var(--payzix-surface);
-    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-    padding: var(--space-6);
-    padding-bottom: calc(var(--space-8) + var(--safe-bottom));
-    box-shadow: var(--shadow-2xl);
-    animation: slide-up var(--duration-slow) var(--ease-out-expo);
-    max-height: 90dvh;
-    overflow-y: auto;
-  }
-  .modal-sheet-handle {
-    width: 36px;
-    height: 4px;
-    background: var(--payzix-border);
-    border-radius: var(--radius-full);
-    margin: 0 auto var(--space-5);
-  }
-
-  /* ── Divider ── */
-  .divider {
-    height: 1px;
-    background: var(--payzix-divider);
-    margin: var(--space-4) 0;
-  }
-
-  /* ── Gradient Text ── */
-  .text-gradient-brand {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* ── App Container ── */
-  .app-container {
-    max-width: 480px;
-    margin: 0 auto;
-    min-height: 100dvh;
-    position: relative;
-    background: var(--payzix-bg);
-  }
-  @media (min-width: 768px) {
-    .app-container {
-      max-width: 420px;
-      border-left: 1px solid var(--payzix-border);
-      border-right: 1px solid var(--payzix-border);
-      box-shadow: var(--shadow-xl);
-    }
-  }
-
-  /* ── Page Header ── */
-  .page-header {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-sticky);
-    background: var(--payzix-bg);
-    padding: var(--space-4) var(--space-5);
-    padding-top: calc(var(--space-4) + var(--safe-top));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: color-mix(in srgb, var(--payzix-bg) 85%, transparent);
-  }
-
-  /* ── Avatar ── */
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--payzix-border);
-    flex-shrink: 0;
-  }
-  .avatar-sm { width: 32px; height: 32px; }
-  .avatar-lg { width: 56px; height: 56px; }
-  .avatar-xl { width: 80px; height: 80px; }
-  .avatar-ring {
-    border: 2px solid var(--payzix-green);
-    box-shadow: 0 0 0 2px var(--payzix-bg), 0 0 0 4px var(--payzix-green);
-  }
-
-  /* ── Progress Bar ── */
-  .progress-bar {
-    height: 6px;
-    background: var(--payzix-bg-sunken);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--gradient-brand);
-    border-radius: var(--radius-full);
-    transition: width var(--duration-slow) var(--ease-out-expo);
-  }
 }
 
-/* ------------------------------------------------------------
-   6. ANIMATIONS & KEYFRAMES
-   ------------------------------------------------------------ */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes slide-up {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
-
-@keyframes slide-down {
-  from { transform: translateY(-20px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes scale-in {
-  from { transform: scale(0.9); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-@keyframes toast-in {
-  from { transform: translateX(-50%) translateY(-120%); }
-  to   { transform: translateX(-50%) translateY(0); }
+/* ================================================================
+   5. ANIMATIONS
+   ================================================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.5; transform: scale(1.3); }
+  50% { opacity: 0.5; transform: scale(1.3); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes count-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes slide-down {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
-
-/* ── Utility animation classes ── */
-.animate-fade-in   { animation: fade-in var(--duration-base) var(--ease-smooth) both; }
-.animate-slide-up  { animation: slide-up var(--duration-slow) var(--ease-out-expo) both; }
-.animate-slide-down{ animation: slide-down var(--duration-base) var(--ease-out-expo) both; }
-.animate-scale-in  { animation: scale-in var(--duration-base) var(--ease-spring) both; }
-.animate-float     { animation: float 3s ease-in-out infinite; }
-.animate-count-up  { animation: count-up var(--duration-slow) var(--ease-out-expo) both; }
-
-/* Stagger children */
-.stagger-children > * {
-  animation: slide-up var(--duration-slow) var(--ease-out-expo) both;
-}
-.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
-.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
-.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
-.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
-.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
-.stagger-children > *:nth-child(7) { animation-delay: 360ms; }
-.stagger-children > *:nth-child(8) { animation-delay: 420ms; }
 
 /* ------------------------------------------------------------
-   7. ACCESSIBILITY
+   4b. TAGLINE / SCRIPT STYLES
    ------------------------------------------------------------ */
-
-/* Focus-visible (keyboard only — no mouse ring) */
-:focus-visible {
-  outline: 2px solid var(--payzix-green);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+.tagline-script {
+  font-family: var(--font-caveat), "Caveat", "Segoe Script", "Brush Script MT", cursive;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
-/* Skip-to-content link */
-.skip-link {
+.tagline-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Underline flourish for tagline */
+.tagline-flourish {
+  position: relative;
+  display: inline-block;
+}
+.tagline-flourish::after {
+  content: "";
   position: absolute;
-  top: -100%;
-  left: var(--space-4);
-  z-index: var(--z-tooltip);
-  background: var(--payzix-green);
-  color: var(--payzix-navy);
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  transition: top var(--duration-fast) var(--ease-smooth);
-}
-.skip-link:focus {
-  top: var(--space-4);
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--gradient-brand);
+  border-radius: var(--radius-full);
+  opacity: 0.4;
+  transform: scaleX(0.9);
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .skeleton::after {
-    animation: none !important;
-  }
+/* Extra small text (used in app mockups) */
+.text-2xs {
+  font-size: 0.625rem;
+  line-height: 1rem;
 }
 
-/* High contrast mode */
-@media (forced-colors: active) {
-  .btn-primary {
-    border: 2px solid ButtonText;
-  }
-  .card {
-    border: 1px solid CanvasText;
-  }
-}
-
-/* ------------------------------------------------------------
-   8. PRINT STYLES (Receipts / Statements)
-   ------------------------------------------------------------ */
-@media print {
-  body {
-    background: #fff !important;
-    color: #000 !important;
-    font-size: 12pt;
-  }
-  .bottom-nav,
-  .page-header,
-  .btn,
-  .toast,
-  .modal-overlay,
-  .modal-sheet {
-    display: none !important;
-  }
-  .card {
-    box-shadow: none !important;
-    border: 1px solid #ccc !important;
-    break-inside: avoid;
-  }
-  a { color: #000 !important; text-decoration: underline; }
-}
-
-/* ------------------------------------------------------------
-   9. UTILITY EXTENSIONS (@layer utilities)
-   ------------------------------------------------------------ */
-@layer utilities {
-  /* Hide scrollbar but keep scroll */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Horizontal scroll snap (carousels) */
-  .scroll-snap-x {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-  .scroll-snap-x > * {
-    scroll-snap-align: start;
-  }
-
-  /* Touch-friendly tap targets (min 44×44) */
-  .tap-target {
-    min-width: 44px;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Prevent text selection on UI elements */
-  .select-none-ui {
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* GPU-accelerated transforms */
-  .gpu {
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-
-  /* Truncate multiline */
-  .line-clamp-2 {
-    display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .line-clamp-3 {
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-}
